@@ -2,12 +2,24 @@
 
 > 从论文到产品 · 从算法到硬件 · 全链条AI赋能
 
-## 快速开始
+## 🚀 快速开始
 
 ```bash
 pip install streamlit
 streamlit run app.py
 ```
+
+## 🌐 全栈版本
+
+本项目已升级为全栈 Web 应用（React + FastAPI），详见：
+**[suzhou-tt-research](https://github.com/dechang64/suzhou-tt-research)**
+
+全栈版本包含：
+- React 19 + TypeScript + Vite 8 前端
+- FastAPI 后端 API
+- 暗色模式 + 响应式设计
+- Docker 部署支持
+- TT-OPC 8模块 + HW-OPC 9模块 统一入口
 
 ## 九大深度模块
 
@@ -32,3 +44,7 @@ streamlit run app.py
 - Python 3.10+
 - Streamlit
 - z-ai-web-dev-sdk (LLM API)
+
+## 📄 License
+
+MIT
