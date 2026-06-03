@@ -1,5 +1,6 @@
 """打样工坊 Prototyping - EVT→DVT→PVT→MP 全流程管理"""
 import streamlit as st
+from llm_utils import llm_chat
 from datetime import datetime, timedelta
 
 def render():

@@ -1,5 +1,6 @@
 """社交交易 SocialTrade - 硬件开发者社区+供应链对接+交易管理"""
 import streamlit as st, random
+from llm_utils import llm_chat
 from datetime import datetime
 
 def render():

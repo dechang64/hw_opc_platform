@@ -1,21 +1,7 @@
 """四角色工作台 QuadHelix - 算法专家+硬件PM+供应链专家+认证顾问"""
+from llm_utils import llm_chat, parse_json_response
 import streamlit as st, json, subprocess, re, time
 from datetime import datetime
-
-def _llm_raw(system_prompt, user_prompt, max_retries=3):
-    for attempt in range(max_retries):
-        try:
-            result = subprocess.run(["z-ai","chat","-p",user_prompt,"-s",system_prompt],
-                capture_output=True,text=True,timeout=120)
-            if result.returncode==0:
-                output=result.stdout.strip()
-                lines=[l for l in output.split('\n') if l.strip() and not l.startswith('🚀')]
-                output='\n'.join(lines)
-                if output: return output
-            if "429" in result.stderr or "Too many" in result.stderr:
-                time.sleep(30*(attempt+1)); continue
-        except: time.sleep(5); continue
-    return None
 
 SYSTEM_PROMPTS = {
     "algo": """你是一位AI算法部署专家，精通大模型压缩、量化和端侧部署。
@@ -250,7 +236,7 @@ def render():
                         if prev_key in st.session_state.quad_results:
                             prev_context += f"\n\n---\n{roles[prev_key]}的分析结论：\n{st.session_state.quad_results[prev_key][:500]}"
                     prompt = f"{context}\n{prev_context}\n\n请从{roles[r_key]}的角度进行分析。"
-                    raw = _llm_raw(SYSTEM_PROMPTS[r_key], prompt)
+                    raw = llm_chat(SYSTEM_PROMPTS[r_key], prompt)
                     if raw:
                         st.session_state.quad_results[r_key] = raw
                         st.session_state.quad_engine[r_key] = "🤖 AI"

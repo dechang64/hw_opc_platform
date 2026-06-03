@@ -1,5 +1,6 @@
 """供应链图谱 SupplyChain - 算法→芯片→ODM→认证 全链路可视化"""
 import streamlit as st, random
+from llm_utils import llm_chat
 from datetime import datetime
 
 # ─── 供应链数据库（模拟） ───

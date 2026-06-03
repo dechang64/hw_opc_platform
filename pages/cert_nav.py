@@ -1,5 +1,6 @@
 """认证导航 CertNav - 3C/SRRC/算法备案/网安评估 全流程"""
 import streamlit as st
+from llm_utils import llm_chat
 from datetime import datetime
 
 CERT_GUIDES = {

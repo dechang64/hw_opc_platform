@@ -1,25 +1,11 @@
 """硬件评估 HWEval - 芯片Benchmark+算法适配+BOM成本+国产化率"""
+from llm_utils import llm_chat, parse_json_response
 import streamlit as st, json, subprocess, re, time, random
 from datetime import datetime
 
 # ─── LLM ───
-def _llm_raw(system_prompt, user_prompt, max_retries=3):
-    for attempt in range(max_retries):
-        try:
-            result = subprocess.run(["z-ai","chat","-p",user_prompt,"-s",system_prompt],
-                capture_output=True,text=True,timeout=120)
-            if result.returncode==0:
-                output=result.stdout.strip()
-                lines=[l for l in output.split('\n') if l.strip() and not l.startswith('🚀')]
-                output='\n'.join(lines)
-                if output: return output
-            if "429" in result.stderr or "Too many" in result.stderr:
-                time.sleep(30*(attempt+1)); continue
-        except: time.sleep(5); continue
-    return None
-
 def _llm_json(system_prompt, user_prompt):
-    raw=_llm_raw(system_prompt,user_prompt)
+    raw=llm_chat(system_prompt,user_prompt)
     if not raw: return None
     for fn in [lambda s:json.loads(s),
                lambda s:json.loads(re.search(r'```(?:json)?\s*\n?(.*?)\n?```',s,re.DOTALL).group(1)),

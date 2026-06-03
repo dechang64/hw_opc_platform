@@ -1,21 +1,7 @@
 """硬件翻译 HWTranslator - 硬件规格书→4个专业版本"""
+from llm_utils import llm_chat, parse_json_response
 import streamlit as st, json, subprocess, re, time
 from datetime import datetime
-
-def _llm_raw(system_prompt, user_prompt, max_retries=3):
-    for attempt in range(max_retries):
-        try:
-            result = subprocess.run(["z-ai","chat","-p",user_prompt,"-s",system_prompt],
-                capture_output=True,text=True,timeout=120)
-            if result.returncode==0:
-                output=result.stdout.strip()
-                lines=[l for l in output.split('\n') if l.strip() and not l.startswith('🚀')]
-                output='\n'.join(lines)
-                if output: return output
-            if "429" in result.stderr or "Too many" in result.stderr:
-                time.sleep(30*(attempt+1)); continue
-        except: time.sleep(5); continue
-    return None
 
 ROLE_PROMPTS = {
     "投资人版": """你是一位专注AI硬件领域的风险投资分析师。将硬件规格书翻译为投资人能快速理解的投资简报。
@@ -316,7 +302,7 @@ def render():
 
 ## 补充信息
 {extra}"""
-                    raw = _llm_raw(ROLE_PROMPTS[role], user_prompt)
+                    raw = llm_chat(ROLE_PROMPTS[role], user_prompt)
                     if raw:
                         results[role] = raw
                         engine_used[role] = "🤖 AI"

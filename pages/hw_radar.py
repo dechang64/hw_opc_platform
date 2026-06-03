@@ -1,5 +1,6 @@
 """硬件雷达 HWRadar - 芯片路线图+传感器价格+国产替代进度"""
 import streamlit as st
+from llm_utils import llm_chat
 from datetime import datetime
 
 def render():

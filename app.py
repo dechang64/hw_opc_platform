@@ -1,9 +1,10 @@
 """
-HW-OPC 国产化智能体硬件技术转移专用平台 v1.0
+HW-OPC 国产化智能体硬件技术转移专用平台 v1.1
 从论文到产品 · 从算法到硬件 · 全链条AI赋能
 """
 import streamlit as st
 from datetime import datetime
+from llm_utils import init_session_state
 
 st.set_page_config(page_title="HW-OPC 国产化智能体硬件平台", page_icon="🔧", layout="wide", initial_sidebar_state="expanded")
 
@@ -81,7 +82,7 @@ with st.sidebar:
     📦 产品层<br>
     🏪 市场层
     </div>""", unsafe_allow_html=True)
-    st.caption(f"v1.0 · {datetime.now().strftime('%Y-%m-%d')}")
+    st.caption(f"v1.1 · {datetime.now().strftime('%Y-%m-%d')}")
 
 # ─── 路由 ───
 modules = {
